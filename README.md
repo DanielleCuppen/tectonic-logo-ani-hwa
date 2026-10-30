@@ -35,10 +35,23 @@ Requires **internet** for Alpine 3 via jsDelivr (scripts at bottom of `index.htm
 | **3 Fault** | No — same |
 
 **Play:** button with `data-tectonic-replay` (plain JS in `demo.js`).  
-**Console (F12):** `TectonicLogoDemo.replay("thirds")` · `TectonicLogoDemo.replay("fault")` · `TectonicLogoDemo.status()`  
-**Desktop:** intro only at ≥768px (like the header). Narrower window → button appears idle.  
-**`prefers-reduced-motion`:** static logo only (no plates).  
-**Troubleshoot:** hard refresh; Network tab should show `demo.js` and Alpine CDN as **200**; `status()` should show `mdPlus` and `hasAlpineData`.
+**Console (F12):** `TectonicLogoDemo.replay("thirds")` · `TectonicLogoDemo.replay("fault")` · `TectonicLogoDemo.status()`
+
+### Mobile (under 768px)
+
+Same rules as the **hwadejong-2026** header:
+
+- The **tectonic plate intro does not run** (CSS hides `.logo-tectonic-plates`; JS skips the animation).
+- You only see the **static** logo SVG.
+- **Play** does nothing visible — not broken, by design.
+
+### Reduced motion (`prefers-reduced-motion: reduce`)
+
+- Intro is **skipped everywhere** (any viewport width).
+- **No plate layers** — static logo only, immediately.
+- The demo page shows a **notice** when this setting is active.
+
+**Troubleshoot:** hard refresh; Network tab should show `demo.js` and Alpine CDN as **200**; `status()` should show `mdPlus`, `reducedMotion`, and `hasAlpineData`.
 
 ## Variants (clip layout)
 

@@ -8,7 +8,7 @@
       name="description"
       content="Standalone demo: brand color seams, equal thirds, angled fault clips."
     />
-    <link rel="stylesheet" href="css/demo.css?v=20261030e" />
+    <link rel="stylesheet" href="css/demo.css?v=20261030f" />
   </head>
   <body>
     <header class="page-header">
@@ -18,6 +18,29 @@
         <code>http://127.0.0.1:8765/</code> over <code>file://</code> — internet
         required for the Alpine CDN. Only <strong>1 — Brand</strong> plays on load;
         2 and 3 via <em>Play</em>.
+      </p>
+      <p class="demo-notice">
+        <strong>Desktop only:</strong> the plate animation runs at viewport widths
+        <strong>768px and up</strong> (same as production). On smaller screens the logo
+        stays static; <strong>Play</strong> does not run the intro.
+      </p>
+      <p
+        id="demo-rm-notice"
+        class="demo-notice demo-notice--alert"
+        role="status"
+        hidden
+      >
+        <strong>Reduced motion</strong> is on in your system settings — the intro is
+        skipped and only the static logo is shown.
+      </p>
+      <p
+        id="demo-narrow-notice"
+        class="demo-notice demo-notice--alert"
+        role="status"
+        hidden
+      >
+        Your viewport is under <strong>768px</strong> — plate animation is disabled;
+        static logo only.
       </p>
     </header>
 
@@ -183,7 +206,7 @@
       </p>
     </footer>
 
-    <script defer src="js/demo.js?v=20261030e"></script>
+    <script defer src="js/demo.js?v=20261030f"></script>
     <script
       defer
       src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.9/dist/cdn.min.js"

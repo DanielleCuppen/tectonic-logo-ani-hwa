@@ -17,14 +17,37 @@ document.documentElement.classList.toggle(
   prefersReducedMotion.matches,
 );
 
+function syncDemoNotices() {
+  const rmNotice = document.getElementById("demo-rm-notice");
+  const narrowNotice = document.getElementById("demo-narrow-notice");
+  const reduced = prefersReducedMotion.matches;
+  const wideEnough = transboxIntroMediaQuery.matches;
+  if (rmNotice) rmNotice.hidden = !reduced;
+  if (narrowNotice) narrowNotice.hidden = reduced || wideEnough;
+}
+
 const syncReducedMotionClass = (event) => {
   document.documentElement.classList.toggle("reduced-motion", event.matches);
+  syncDemoNotices();
 };
 
 if (typeof prefersReducedMotion.addEventListener === "function") {
   prefersReducedMotion.addEventListener("change", syncReducedMotionClass);
 } else if (typeof prefersReducedMotion.addListener === "function") {
   prefersReducedMotion.addListener(syncReducedMotionClass);
+}
+
+const syncNarrowNotice = () => syncDemoNotices();
+if (typeof transboxIntroMediaQuery.addEventListener === "function") {
+  transboxIntroMediaQuery.addEventListener("change", syncNarrowNotice);
+} else if (typeof transboxIntroMediaQuery.addListener === "function") {
+  transboxIntroMediaQuery.addListener(syncNarrowNotice);
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", syncDemoNotices);
+} else {
+  syncDemoNotices();
 }
 
 /** @param {HTMLElement} root article.demo-card */
