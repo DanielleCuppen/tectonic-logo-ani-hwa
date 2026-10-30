@@ -6,11 +6,14 @@
   --demo-text: #f2f2f2;
   --demo-muted: #a3a3a3;
   --demo-accent: #ef8706;
-  --logo-width: min(290px, 100%);
+  --logo-width: 290px;
+  /* Animatie-bleed: ruimer dan productie-header (translate tot ~48px + rotate/scale). */
+  --anim-bleed-x: 6.5rem;
+  --anim-bleed-y: 7rem;
+  --logo-height: calc(var(--logo-width) * 791 / 2560);
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --slab-1-end: 48.828125%;
-  --slab-3-start: 93.13905859375%;
   --third: 33.333333%;
+  --third-2: 66.666666%;
 }
 
 @media (prefers-color-scheme: light) {
@@ -51,32 +54,20 @@ body {
 .demos {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  padding: 0 1rem 2rem;
-  max-width: 22rem;
+  gap: 3rem;
+  padding: 0 1rem 3rem;
+  max-width: 42rem;
   margin: 0 auto;
-}
-
-@media (min-width: 768px) {
-  .demos {
-    max-width: 960px;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    justify-content: center;
-  }
-
-  .demo-card {
-    flex: 1 1 280px;
-    max-width: 320px;
-  }
+  width: 100%;
 }
 
 .demo-card {
   background: var(--demo-surface);
   border-radius: 0.75rem;
-  padding: 1rem;
+  padding: 1.25rem 1rem 1.5rem;
   box-shadow: 0 1px 3px rgb(0 0 0 / 0.2);
+  width: 100%;
+  overflow: visible;
 }
 
 .demo-card__head h2 {
@@ -94,7 +85,7 @@ body {
   font-size: 0.8em;
 }
 
-.demo-replay {
+.demo-play {
   font: inherit;
   cursor: pointer;
   border: 1px solid var(--demo-accent);
@@ -104,11 +95,11 @@ body {
   padding: 0.35rem 0.75rem;
 }
 
-.demo-replay:hover {
+.demo-play:hover {
   background: color-mix(in srgb, var(--demo-accent) 15%, transparent);
 }
 
-.demo-replay:focus-visible {
+.demo-play:focus-visible {
   outline: 2px solid var(--demo-accent);
   outline-offset: 2px;
 }
@@ -116,40 +107,72 @@ body {
 .demo-stage-wrap {
   display: flex;
   justify-content: center;
-  padding: 1rem 0 0.5rem;
-  min-height: 5.5rem;
+  align-items: center;
+  overflow: visible;
+  padding: 1.25rem 0.5rem;
+  margin: 0;
 }
 
-/* --- Shared tectonic stage (mirrors hwadejong header logic) --- */
-.logo-stage {
+.demo-stage-canvas {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  box-sizing: content-box;
+  width: var(--logo-width);
+  min-width: var(--logo-width);
+  min-height: var(--logo-height);
+  padding: var(--anim-bleed-y) var(--anim-bleed-x);
+}
+
+/*
+ * Tectonic CSS = resources/css/app.css (logo-tectonic-*), zonder Tailwind/@apply.
+ * Demo: 290px logo + canvas-bleed; variant 2/3 clip-overrides op data-variant.
+ */
+.demo-stage-canvas,
+.logo-tectonic-stage,
+.logo-tectonic-plates {
+  overflow: visible;
+}
+
+.logo-tectonic-stage {
+  --logo-slab-grey-first-end: 48.828125%;
+  --logo-slab-grey-last-start: 93.13905859375%;
+
   position: relative;
   display: block;
   width: fit-content;
   max-width: 100%;
 }
 
-.logo-stage__lcp {
-  display: block;
-  width: var(--logo-width);
-  height: auto;
-  position: relative;
-  z-index: 1;
-}
-
-.logo-plates {
+.logo-tectonic-plates {
   pointer-events: none;
   position: absolute;
   inset: 0;
   z-index: 2;
 }
 
-.logo-plate {
+.logo-tectonic-stage .logoImg {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: var(--logo-width);
+  max-width: 100%;
+  height: auto;
+}
+
+.logo-tectonic-plate {
   position: absolute;
   inset: 0;
   overflow: hidden;
 }
 
-.logo-plate__img {
+.demo-stage-canvas .logo-tectonic-plate {
+  overflow: visible;
+}
+
+.logo-tectonic-plate__img {
   position: absolute;
   left: 0;
   top: 0;
@@ -157,131 +180,179 @@ body {
   width: var(--logo-width);
   max-width: none;
   height: auto;
-  transition: transform 950ms var(--ease-out);
+  margin: 0;
+  transition: transform 950ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.logo-plate--2 .logo-plate__img {
+[data-variant="brand"] .logo-tectonic-plate--grey-first .logo-tectonic-plate__img {
+  clip-path: inset(0 calc(100% - var(--logo-slab-grey-first-end)) 0 0);
+}
+
+[data-variant="brand"] .logo-tectonic-plate--orange .logo-tectonic-plate__img {
+  clip-path: inset(
+    0 calc(100% - var(--logo-slab-grey-last-start)) 0
+    var(--logo-slab-grey-first-end)
+  );
+}
+
+[data-variant="brand"] .logo-tectonic-plate--grey-last .logo-tectonic-plate__img {
+  clip-path: inset(0 0 0 var(--logo-slab-grey-last-start));
+}
+
+[data-variant="thirds"] .logo-tectonic-plate--grey-first .logo-tectonic-plate__img {
+  clip-path: inset(0 calc(100% - var(--third)) 0 0);
+}
+
+[data-variant="thirds"] .logo-tectonic-plate--orange .logo-tectonic-plate__img {
+  clip-path: inset(0 calc(100% - var(--third-2)) 0 var(--third));
+}
+
+[data-variant="thirds"] .logo-tectonic-plate--grey-last .logo-tectonic-plate__img {
+  clip-path: inset(0 0 0 var(--third-2));
+}
+
+[data-variant="fault"] .logo-tectonic-plate--grey-first .logo-tectonic-plate__img {
+  clip-path: polygon(0 0, 51.5% 0, 46% 100%, 0 100%);
+}
+
+[data-variant="fault"] .logo-tectonic-plate--orange .logo-tectonic-plate__img {
+  clip-path: polygon(46% 0, 95.5% 0, 91% 100%, 51.5% 100%);
+}
+
+[data-variant="fault"] .logo-tectonic-plate--grey-last .logo-tectonic-plate__img {
+  clip-path: polygon(91% 0, 100% 0, 100% 100%, 95.5% 100%);
+}
+
+.logo-tectonic-plate--orange .logo-tectonic-plate__img {
   transition-duration: 850ms;
   transition-delay: 80ms;
 }
 
-.logo-plate--3 .logo-plate__img {
+.logo-tectonic-plate--grey-last .logo-tectonic-plate__img {
   transition-duration: 850ms;
   transition-delay: 160ms;
 }
 
-/* Variant 1: brand insets */
-[data-variant="brand"] .logo-plate--1 .logo-plate__img {
-  clip-path: inset(0 calc(100% - var(--slab-1-end)) 0 0);
+@media (max-width: 767px) {
+  .logo-tectonic-plates {
+    display: none;
+  }
 }
 
-[data-variant="brand"] .logo-plate--2 .logo-plate__img {
-  clip-path: inset(
-    0 calc(100% - var(--slab-3-start)) 0 var(--slab-1-end)
-  );
-}
-
-[data-variant="brand"] .logo-plate--3 .logo-plate__img {
-  clip-path: inset(0 0 0 var(--slab-3-start));
-}
-
-/* Variant 2: equal thirds */
-[data-variant="thirds"] .logo-plate--1 .logo-plate__img {
-  clip-path: inset(0 calc(100% - var(--third)) 0 0);
-}
-
-[data-variant="thirds"] {
-  --third-2: 66.666666%;
-}
-
-[data-variant="thirds"] .logo-plate--2 .logo-plate__img {
-  clip-path: inset(0 calc(100% - var(--third-2)) 0 var(--third));
-}
-
-[data-variant="thirds"] .logo-plate--3 .logo-plate__img {
-  clip-path: inset(0 0 0 var(--third-2));
-}
-
-/* Variant 3: oblique joints at brand column boundaries (~2.5% skew) */
-[data-variant="fault"] .logo-plate--1 .logo-plate__img {
-  clip-path: polygon(0 0, 51.5% 0, 46% 100%, 0 100%);
-}
-
-[data-variant="fault"] .logo-plate--2 .logo-plate__img {
-  clip-path: polygon(46% 0, 95.5% 0, 91% 100%, 51.5% 100%);
-}
-
-[data-variant="fault"] .logo-plate--3 .logo-plate__img {
-  clip-path: polygon(91% 0, 100% 0, 100% 100%, 95.5% 100%);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .logo-stage:not([data-settled="true"]) .logo-plate--1 .logo-plate__img {
+@media (prefers-reduced-motion: no-preference) and (min-width: 768px) {
+  .logo-tectonic-stage:not(.is-settled) .logo-tectonic-plate--grey-first .logo-tectonic-plate__img {
     transform: translate3d(-32px, 14px, 0) rotate(-4deg) scale(0.9);
     transform-origin: 0% 50%;
   }
 
-  .logo-stage:not([data-settled="true"]) .logo-plate--2 .logo-plate__img {
+  .logo-tectonic-stage:not(.is-settled) .logo-tectonic-plate--orange .logo-tectonic-plate__img {
     transform: translate3d(8px, 36px, 0);
     transform-origin: 50% 100%;
   }
 
-  .logo-stage:not([data-settled="true"]) .logo-plate--3 .logo-plate__img {
+  .logo-tectonic-stage:not(.is-settled) .logo-tectonic-plate--grey-last .logo-tectonic-plate__img {
     transform: translate3d(32px, -14px, 0) rotate(2.5deg);
     transform-origin: 100% 50%;
   }
 
-  [data-variant="fault"]
-    .logo-stage:not([data-settled="true"])
-    .logo-plate--1
-    .logo-plate__img {
-    transform: translate3d(-28px, 8px, 0) rotate(-6deg) scale(0.92);
+  .logo-tectonic-stage.is-settled .logo-tectonic-plate__img {
+    transform: none;
   }
 
-  [data-variant="fault"]
-    .logo-stage:not([data-settled="true"])
-    .logo-plate--2
-    .logo-plate__img {
-    transform: translate3d(0, 48px, 0) scale(0.96);
-    transform-origin: 50% 100%;
-  }
-
-  [data-variant="fault"]
-    .logo-stage:not([data-settled="true"])
-    .logo-plate--3
-    .logo-plate__img {
-    transform: translate3d(36px, -20px, 0) rotate(5deg);
-  }
-
-  .logo-stage:not([data-settled="true"]) .logo-stage__lcp {
+  .logo-tectonic-stage:not(.is-settled) .logoImg {
     opacity: 0;
   }
 
-  .logo-stage__lcp {
+  .logo-tectonic-stage .logoImg {
     transition: opacity 0.5s ease 0.35s;
   }
 
-  .logo-stage[data-settled="true"] .logo-stage__lcp {
+  .logo-tectonic-stage.is-settled .logoImg {
     z-index: 3;
     opacity: 1;
   }
 
-  .logo-stage[data-settled="true"] .logo-plates {
+  .logo-tectonic-stage.is-settled .logo-tectonic-plates {
     opacity: 0;
     transition: opacity 0.35s ease 1.05s;
+    pointer-events: none;
   }
 
-  .logo-stage[data-settled="true"] .logo-plate__img {
-    transform: none;
+  .logo-tectonic-stage:not(.is-settled) .logo-tectonic-plates {
+    opacity: 1;
+  }
+
+  /* Tijdens replay: nooit platen verbergen door .is-settled terwijl is-playing nog sync loopt. */
+  .logo-tectonic-stage.is-playing .logo-tectonic-plates {
+    opacity: 1;
+    pointer-events: none;
+  }
+
+  .logo-tectonic-stage.is-playing:not(.is-settled) .logoImg {
+    opacity: 0;
+    z-index: 1;
+  }
+
+  .logo-tectonic-stage.is-playing.is-settled .logoImg {
+    z-index: 3;
+    opacity: 1;
+  }
+
+  /*
+   * Replay: platen stonden op transform:none (is-settled). Zonder deze regel
+   * animeren ze 950ms *naar* scatter terwijl JS na 100ms al settelt → flits.
+   * Eerst instant scatter, daarna ~950ms inschuiven bij .is-settled.
+   */
+  .logo-tectonic-stage.is-playing:not(.is-settled) .logo-tectonic-plate__img {
+    transition: none;
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .logo-plates {
-    display: none;
+.reduced-motion .logo-tectonic-plates {
+  display: none;
+}
+
+/*
+ * Variant 2/3: vóór Alpine (`data-intro-ready`) → eindbeeld, geen scatter-flits.
+ * Idle: .is-settled:not(.is-playing). Tijdens Afspelen: zelfde intro als variant 1.
+ */
+@media (prefers-reduced-motion: no-preference) and (min-width: 768px) {
+  [data-variant="thirds"] .logo-tectonic-stage:not([data-intro-ready]) .logoImg,
+  [data-variant="fault"] .logo-tectonic-stage:not([data-intro-ready]) .logoImg {
+    opacity: 1;
+    z-index: 3;
   }
 
-  .logo-stage__lcp {
+  [data-variant="thirds"] .logo-tectonic-stage:not([data-intro-ready]) .logo-tectonic-plates,
+  [data-variant="fault"] .logo-tectonic-stage:not([data-intro-ready]) .logo-tectonic-plates {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  [data-variant="thirds"] .logo-tectonic-stage:not([data-intro-ready]) .logo-tectonic-plate__img,
+  [data-variant="fault"] .logo-tectonic-stage:not([data-intro-ready]) .logo-tectonic-plate__img {
+    transform: none;
+    transition: none;
+  }
+
+  [data-variant="thirds"] .logo-tectonic-stage[data-idle] .logoImg,
+  [data-variant="fault"] .logo-tectonic-stage[data-idle] .logoImg {
     opacity: 1;
+    z-index: 3;
+    transition: none;
+  }
+
+  [data-variant="thirds"] .logo-tectonic-stage[data-idle] .logo-tectonic-plates,
+  [data-variant="fault"] .logo-tectonic-stage[data-idle] .logo-tectonic-plates {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --logo-width: min(290px, calc(100vw - 3rem));
+    --anim-bleed-x: 3.25rem;
+    --anim-bleed-y: 3.75rem;
   }
 }

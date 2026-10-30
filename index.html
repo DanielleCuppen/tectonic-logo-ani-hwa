@@ -8,164 +8,169 @@
       name="description"
       content="Standalone demo: brand-kleurnaden, gelijke derden, schuine breuk."
     />
-    <link rel="stylesheet" href="css/demo.css" />
+    <link rel="stylesheet" href="css/demo.css?v=20261030d" />
   </head>
   <body>
     <header class="page-header">
       <h1>Tectonic logo intro</h1>
       <p>
-        Drie varianten naast elkaar. Logo-breedte demo: <strong>290px</strong>
-        (desktop header HWA 2026).
+        Zelfde Alpine/markup als de header (variant 1). Open
+        <code>index.html</code> direct (file://) — internet nodig voor Alpine-CDN.
+        Alleen <strong>1 — Brand</strong> speelt bij load; 2 en 3 via
+        <em>Afspelen</em>.
       </p>
     </header>
 
     <main class="demos">
-      <article class="demo-card" data-variant="brand">
+      <article class="demo-card" data-variant="brand" x-data="logoTectonicIntro({ playOnInit: true })">
         <div class="demo-card__head">
           <h2>1 — Brand (kleurnaden)</h2>
           <p>
-            viewBox 2560: <code>1250</code> · <code>1134,36</code> ·
-            <code>176,34</code> — zoals productie.
+            <code>x-data="logoTectonicIntro()"</code> — viewBox 2560:
+            <code>1250</code> · <code>1134,36</code> · <code>176,34</code>.
           </p>
-          <button type="button" class="demo-replay">Opnieuw</button>
+          <button type="button" class="demo-play" data-tectonic-replay>Afspelen</button>
         </div>
         <div class="demo-stage-wrap">
-          <div class="logo-stage" data-settled="false" aria-hidden="false">
-            <img
-              class="logo-stage__lcp"
-              src="assets/HWADEJONG-Interieur-Architect.svg"
-              width="220"
-              height="68"
-              alt="HWA de Jong Interieur Architect (statisch na intro)"
-            />
-            <div class="logo-plates" aria-hidden="true">
-              <div class="logo-plate logo-plate--1">
-                <img
-                  class="logo-plate__img"
-                  src="assets/HWADEJONG-Interieur-Architect.svg"
-                  width="220"
-                  height="68"
-                  alt=""
-                />
-              </div>
-              <div class="logo-plate logo-plate--2">
-                <img
-                  class="logo-plate__img"
-                  src="assets/HWADEJONG-Interieur-Architect.svg"
-                  width="220"
-                  height="68"
-                  alt=""
-                />
-              </div>
-              <div class="logo-plate logo-plate--3">
-                <img
-                  class="logo-plate__img"
-                  src="assets/HWADEJONG-Interieur-Architect.svg"
-                  width="220"
-                  height="68"
-                  alt=""
-                />
-              </div>
-            </div>
+          <div class="demo-stage-canvas">
+            <span class="logo-tectonic-stage">
+              <img
+                src="assets/HWADEJONG-Interieur-Architect.svg"
+                width="220"
+                height="68"
+                class="logoImg"
+                alt="HWA de Jong Interieur Architect"
+              />
+              <span class="logo-tectonic-plates" aria-hidden="true">
+                <span class="logo-tectonic-plate logo-tectonic-plate--grey-first">
+                  <img
+                    src="assets/HWADEJONG-Interieur-Architect.svg"
+                    width="220"
+                    height="68"
+                    class="logo-tectonic-plate__img"
+                    alt=""
+                  />
+                </span>
+                <span class="logo-tectonic-plate logo-tectonic-plate--orange">
+                  <img
+                    src="assets/HWADEJONG-Interieur-Architect.svg"
+                    width="220"
+                    height="68"
+                    class="logo-tectonic-plate__img"
+                    alt=""
+                  />
+                </span>
+                <span class="logo-tectonic-plate logo-tectonic-plate--grey-last">
+                  <img
+                    src="assets/HWADEJONG-Interieur-Architect.svg"
+                    width="220"
+                    height="68"
+                    class="logo-tectonic-plate__img"
+                    alt=""
+                  />
+                </span>
+              </span>
+            </span>
           </div>
         </div>
       </article>
 
-      <article class="demo-card" data-variant="thirds">
+      <article class="demo-card" data-variant="thirds" x-data="logoTectonicIntro({ playOnInit: false })">
         <div class="demo-card__head">
           <h2>2 — Derden (gelijk)</h2>
-          <p>Drie kolommen van elk <code>33,333%</code> — geen kleurlogica.</p>
-          <button type="button" class="demo-replay">Opnieuw</button>
+          <p>Drie kolommen <code>33,333%</code> — statisch tot <em>Afspelen</em>.</p>
+          <button type="button" class="demo-play" data-tectonic-replay>Afspelen</button>
         </div>
         <div class="demo-stage-wrap">
-          <div class="logo-stage" data-settled="false">
-            <img
-              class="logo-stage__lcp"
-              src="assets/HWADEJONG-Interieur-Architect.svg"
-              width="220"
-              height="68"
-              alt=""
-            />
-            <div class="logo-plates" aria-hidden="true">
-              <div class="logo-plate logo-plate--1">
-                <img
-                  class="logo-plate__img"
-                  src="assets/HWADEJONG-Interieur-Architect.svg"
-                  width="220"
-                  height="68"
-                  alt=""
-                />
-              </div>
-              <div class="logo-plate logo-plate--2">
-                <img
-                  class="logo-plate__img"
-                  src="assets/HWADEJONG-Interieur-Architect.svg"
-                  width="220"
-                  height="68"
-                  alt=""
-                />
-              </div>
-              <div class="logo-plate logo-plate--3">
-                <img
-                  class="logo-plate__img"
-                  src="assets/HWADEJONG-Interieur-Architect.svg"
-                  width="220"
-                  height="68"
-                  alt=""
-                />
-              </div>
-            </div>
+          <div class="demo-stage-canvas">
+            <span class="logo-tectonic-stage">
+              <img
+                src="assets/HWADEJONG-Interieur-Architect.svg"
+                width="220"
+                height="68"
+                class="logoImg"
+                alt=""
+              />
+              <span class="logo-tectonic-plates" aria-hidden="true">
+                <span class="logo-tectonic-plate logo-tectonic-plate--grey-first">
+                  <img
+                    src="assets/HWADEJONG-Interieur-Architect.svg"
+                    width="220"
+                    height="68"
+                    class="logo-tectonic-plate__img"
+                    alt=""
+                  />
+                </span>
+                <span class="logo-tectonic-plate logo-tectonic-plate--orange">
+                  <img
+                    src="assets/HWADEJONG-Interieur-Architect.svg"
+                    width="220"
+                    height="68"
+                    class="logo-tectonic-plate__img"
+                    alt=""
+                  />
+                </span>
+                <span class="logo-tectonic-plate logo-tectonic-plate--grey-last">
+                  <img
+                    src="assets/HWADEJONG-Interieur-Architect.svg"
+                    width="220"
+                    height="68"
+                    class="logo-tectonic-plate__img"
+                    alt=""
+                  />
+                </span>
+              </span>
+            </span>
           </div>
         </div>
       </article>
 
-      <article class="demo-card" data-variant="fault">
+      <article class="demo-card" data-variant="fault" x-data="logoTectonicIntro({ playOnInit: false })">
         <div class="demo-card__head">
           <h2>3 — Breuk (schuine voegen)</h2>
-          <p>
-            Zelfde kolombreedtes als brand, maar <strong>schuine</strong>
-            clips + andere choreografie (midden van onder).
-          </p>
-          <button type="button" class="demo-replay">Opnieuw</button>
+          <p>Schuine clips — statisch tot <em>Afspelen</em>.</p>
+          <button type="button" class="demo-play" data-tectonic-replay>Afspelen</button>
         </div>
         <div class="demo-stage-wrap">
-          <div class="logo-stage" data-settled="false">
-            <img
-              class="logo-stage__lcp"
-              src="assets/HWADEJONG-Interieur-Architect.svg"
-              width="220"
-              height="68"
-              alt=""
-            />
-            <div class="logo-plates" aria-hidden="true">
-              <div class="logo-plate logo-plate--1">
-                <img
-                  class="logo-plate__img"
-                  src="assets/HWADEJONG-Interieur-Architect.svg"
-                  width="220"
-                  height="68"
-                  alt=""
-                />
-              </div>
-              <div class="logo-plate logo-plate--2">
-                <img
-                  class="logo-plate__img"
-                  src="assets/HWADEJONG-Interieur-Architect.svg"
-                  width="220"
-                  height="68"
-                  alt=""
-                />
-              </div>
-              <div class="logo-plate logo-plate--3">
-                <img
-                  class="logo-plate__img"
-                  src="assets/HWADEJONG-Interieur-Architect.svg"
-                  width="220"
-                  height="68"
-                  alt=""
-                />
-              </div>
-            </div>
+          <div class="demo-stage-canvas">
+            <span class="logo-tectonic-stage">
+              <img
+                src="assets/HWADEJONG-Interieur-Architect.svg"
+                width="220"
+                height="68"
+                class="logoImg"
+                alt=""
+              />
+              <span class="logo-tectonic-plates" aria-hidden="true">
+                <span class="logo-tectonic-plate logo-tectonic-plate--grey-first">
+                  <img
+                    src="assets/HWADEJONG-Interieur-Architect.svg"
+                    width="220"
+                    height="68"
+                    class="logo-tectonic-plate__img"
+                    alt=""
+                  />
+                </span>
+                <span class="logo-tectonic-plate logo-tectonic-plate--orange">
+                  <img
+                    src="assets/HWADEJONG-Interieur-Architect.svg"
+                    width="220"
+                    height="68"
+                    class="logo-tectonic-plate__img"
+                    alt=""
+                  />
+                </span>
+                <span class="logo-tectonic-plate logo-tectonic-plate--grey-last">
+                  <img
+                    src="assets/HWADEJONG-Interieur-Architect.svg"
+                    width="220"
+                    height="68"
+                    class="logo-tectonic-plate__img"
+                    alt=""
+                  />
+                </span>
+              </span>
+            </span>
           </div>
         </div>
       </article>
@@ -173,12 +178,15 @@
 
     <footer class="page-footer">
       <p>
-        Standalone repo:
-        <code>tectonic-logo-ani-hwa</code> (naast hwadejong-2026). Zie
-        <code>README.md</code> voor V3-ideeën.
+        Repo: <code>tectonic-logo-ani-hwa</code> · Alpine 3.x via CDN (zelfde component
+        als hwadejong-2026).
       </p>
     </footer>
 
-    <script src="js/demo.js" defer></script>
+    <script defer src="js/demo.js?v=20261030d"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.9/dist/cdn.min.js"
+    ></script>
   </body>
 </html>
