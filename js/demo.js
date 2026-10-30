@@ -1,15 +1,15 @@
 /**
- * Standalone demo — zelfde intro-logica als hwadejong-2026 header (md+, reduced-motion).
- * Eén Alpine-component; Afspelen via document-click (werkt altijd, geen @click nodig).
+ * Standalone demo — same intro logic as hwadejong-2026 header (md+, reduced-motion).
+ * Single Alpine component; Play via document-level click (no @click required).
  */
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const transboxIntroMediaQuery = window.matchMedia("(min-width: 768px)");
 
-/** Eerste load variant 1 — sync met header hwadejong-2026 */
+/** Variant 1 first load — keep in sync with hwadejong-2026 header */
 const SCATTER_HOLD_MS = 100;
-/** Afspelen: langer “open” (bij load zie je impliciet meer frames vóór settle) */
+/** Play / replay: longer “open” hold (load gets extra frames before settle) */
 const SCATTER_HOLD_REPLAY_MS = 450;
-/** Na settle: plate-transform (≤950ms + delays) + plate-fade (1,05s + 350ms) */
+/** After settle: plate transform (≤950ms + delays) + plate fade (1.05s + 350ms) */
 const PLAYING_CLEAR_MS = 1500;
 
 document.documentElement.classList.toggle(
@@ -87,7 +87,7 @@ function resetStageBeforeReplay(component) {
 
 /**
  * @param {{ playOnInit?: boolean }} [config]
- * playOnInit true (default): variant 1 bij load. false: variant 2/3 statisch tot Afspelen.
+ * playOnInit true (default): variant 1 on load. false: variants 2/3 static until Play.
  */
 function logoTectonicIntro(config = {}) {
   const playOnInit = config.playOnInit !== false;
@@ -117,12 +117,12 @@ function logoTectonicIntro(config = {}) {
 
 function replayDemoCard(card) {
   if (!card) {
-    console.warn("[TectonicLogoDemo] Geen kaart gevonden.");
+    console.warn("[TectonicLogoDemo] No demo card found.");
     return false;
   }
   if (typeof Alpine === "undefined" || typeof Alpine.$data !== "function") {
     console.warn(
-      "[TectonicLogoDemo] Alpine niet geladen — check internet (CDN) en console op 404 voor js/demo.js.",
+      "[TectonicLogoDemo] Alpine not loaded — check internet (CDN) and Network tab for 404 on js/demo.js.",
     );
     return false;
   }
@@ -130,11 +130,11 @@ function replayDemoCard(card) {
   try {
     data = Alpine.$data(card);
   } catch (err) {
-    console.error("[TectonicLogoDemo] Alpine.$data mislukt:", err);
+    console.error("[TectonicLogoDemo] Alpine.$data failed:", err);
     return false;
   }
   if (!data || typeof data.replay !== "function") {
-    console.warn("[TectonicLogoDemo] Geen replay() op deze kaart — x-data klopt?");
+    console.warn("[TectonicLogoDemo] No replay() on this card — check x-data.");
     return false;
   }
   data.replay();

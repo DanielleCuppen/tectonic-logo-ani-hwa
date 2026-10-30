@@ -1,60 +1,63 @@
 # Tectonic logo intro — HWA de Jong (standalone)
 
-Speeltuin voor **drie varianten** van het logo-intro, los van [hwadejong-2026](https://github.com/DanielleCuppen/hwadejong-2026).
+Playground for **three variants** of the logo intro, separate from [hwadejong-2026](https://github.com/DanielleCuppen/hwadejong-2026) (private site repo).
 
-## Animatie aanpassen — opnieuw bouwen?
+## Editing the animation — rebuild?
 
-| Waar je editeert | Build nodig? |
-|------------------|--------------|
-| **`tectonic-logo-ani-hwa`** — `css/demo.css`, `js/demo.js`, `index.html` | **Nee.** Opslaan → **hard refresh** in de browser (eventueel cache legen). |
-| **`hwadejong-2026`** — `resources/css/app.css`, `resources/js/app.js`, Blade | **Ja** (voor de site): `npm run dev` terwijl je werkt, of `npm run build` voor gebundelde assets op `.test`. |
+| Where you edit | Build required? |
+|----------------|-----------------|
+| **`tectonic-logo-ani-hwa`** — `css/demo.css`, `js/demo.js`, `index.html` | **No.** Save → **hard refresh** (clear cache if needed). |
+| **`hwadejong-2026`** — `resources/css/app.css`, `resources/js/app.js`, Blade | **Yes** (for the site): `npm run dev` while working, or `npm run build` for assets on `.test`. |
 
-Intro **timing**: `SCATTER_HOLD_MS` (100 ms, variant 1 bij load = header) · **`SCATTER_HOLD_REPLAY_MS`** (450 ms, knop Afspelen / variant 2–3). **`is-settled` op de stage** wordt daar via `classList` gezet (niet Alpine `:class` — dat liep achter en verstopte platen bij Afspelen). **Beweging** (px/rotate): `css/demo.css` onder `.logo-tectonic-stage:not(.is-settled)`.
+**Timing:** `SCATTER_HOLD_MS` (100 ms, variant 1 on load = production header) · **`SCATTER_HOLD_REPLAY_MS`** (450 ms, **Play** button / variants 2–3). **`is-settled`** on the stage is set via `classList` (not Alpine `:class`). **Motion** (px/rotate): `css/demo.css` under `.logo-tectonic-stage:not(.is-settled)`.
 
-## Openen
+## Run locally
 
-1. **Direct (werkt):** open `index.html` in de browser (`file://`).  
-   - Vereist **internet** voor Alpine 3 via jsDelivr (`index.html` → scripts onderaan).  
-   - Open het bestand **vanuit deze map**, zodat `css/`, `js/` en `assets/` kloppen.
-
-2. **Optioneel:** lokale server (zelfde resultaat, handig bij GitHub Pages-test):
+1. **Recommended:** local HTTP server (reliable paths + cache):
 
 ```bash
-npx --yes serve .
+cd ~/Documents/GitHub/tectonic-logo-ani-hwa
+python3 -m http.server 8765
 ```
 
-## Gedrag bij load
+Open **http://127.0.0.1:8765/index.html**
 
-| Variant | Auto-intro bij load |
+2. **Optional:** `file://` works but cache/CDN can be flaky — prefer the server above.
+
+Requires **internet** for Alpine 3 via jsDelivr (scripts at bottom of `index.html`).
+
+## Behaviour on load
+
+| Variant | Auto-intro on load |
 |---------|---------------------|
-| **1 Brand** | Ja — `logoTectonicIntro()` (zelfde als site-header) |
-| **2 Derden** | Nee — statisch logo; animatie via **Afspelen** |
-| **3 Breuk** | Nee — idem |
+| **1 Brand** | Yes — `logoTectonicIntro({ playOnInit: true })` (same as site header) |
+| **2 Thirds** | No — static logo; animation via **Play** |
+| **3 Fault** | No — same |
 
-**Afspelen:** knop met `data-tectonic-replay` (plain JS in `demo.js`, geen Alpine `@click`).  
-**Console (F12):** `TectonicLogoDemo.replay("thirds")` · `TectonicLogoDemo.replay("fault")` · `TectonicLogoDemo.status()` — geen aparte “democontrole”; oude snippets die `logoTectonicIntroStatic` of `@click` aanroepen horen **niet** meer bij deze versie.  
-**Desktop:** intro alleen ≥768px (zoals header). Smaller venster → knop lijkt idle.  
-**`prefers-reduced-motion`:** overal direct statisch logo (geen platen).  
-**Troubleshoot:** hard refresh; in Network moeten `js/demo.js` en Alpine-CDN **200** zijn; `status()` toont `mdPlus` en `hasAlpineData`.
+**Play:** button with `data-tectonic-replay` (plain JS in `demo.js`).  
+**Console (F12):** `TectonicLogoDemo.replay("thirds")` · `TectonicLogoDemo.replay("fault")` · `TectonicLogoDemo.status()`  
+**Desktop:** intro only at ≥768px (like the header). Narrower window → button appears idle.  
+**`prefers-reduced-motion`:** static logo only (no plates).  
+**Troubleshoot:** hard refresh; Network tab should show `demo.js` and Alpine CDN as **200**; `status()` should show `mdPlus` and `hasAlpineData`.
 
-## Varianten (snede)
+## Variants (clip layout)
 
-| # | Naam | Snede |
+| # | Name | Split |
 |---|------|--------|
-| 1 | **Brand** | 1250 / 1134,36 / 176,34 (viewBox 2560) |
-| 2 | **Derden** | 33,333% × 3 |
-| 3 | **Breuk** | Schuine `polygon`-clips (demo-choreografie) |
+| 1 | **Brand** | 1250 / 1134.36 / 176.34 (viewBox 2560) |
+| 2 | **Thirds** | 33.333% × 3 |
+| 3 | **Fault** | Angled `polygon` clips (demo choreography) |
 
-## Sync met hwadejong-2026
+## Sync with hwadejong-2026
 
-- **Markup/CSS:** `logo-tectonic-stage`, `is-settled`, `logoImg`, plate-klassen — zie `resources/views/sections/header.blade.php` en `resources/css/app.css`.
-- **JS:** `demo.js` spiegelt `logoTectonicIntro()` + `reduced-motion` op `<html>` uit `resources/js/app.js`.
-- **Alleen demo:** `logoTectonicIntroStatic()`, `demo-stage-canvas` (extra ruimte), variant 2/3 clip-overrides.
+- **Markup/CSS:** `logo-tectonic-stage`, `is-settled`, `logoImg`, plate classes — see `resources/views/sections/header.blade.php` and `resources/css/app.css`.
+- **JS:** `demo.js` mirrors `logoTectonicIntro()` and `reduced-motion` on `<html>` from `resources/js/app.js` (demo adds `is-playing`, replay hold, and document-level Play handling).
+- **Demo-only:** `demo-stage-canvas` (extra bleed), `[data-variant]` clip overrides for thirds/fault.
 
-## V3 — ideeën
+## Ideas (v3)
 
-Golden ratio-snedes, parallax-diepte, horizontale top-band apart, mask-SVG — zie eerdere notities in commits of experimenteer in `css/demo.css` onder `[data-variant="fault"]`.
+Golden-ratio splits, parallax depth, separate top band, mask SVG — experiment under `[data-variant="fault"]` in `css/demo.css`.
 
 ## Credits
 
-Logo © Herman de Jong. Demo-code MIT — `LICENSE`.
+Logo © Herman de Jong. Demo code MIT — see `LICENSE`.

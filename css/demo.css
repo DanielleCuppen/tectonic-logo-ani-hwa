@@ -7,7 +7,7 @@
   --demo-muted: #a3a3a3;
   --demo-accent: #ef8706;
   --logo-width: 290px;
-  /* Animatie-bleed: ruimer dan productie-header (translate tot ~48px + rotate/scale). */
+  /* Animation bleed: larger than production header (translate up to ~48px + rotate/scale). */
   --anim-bleed-x: 6.5rem;
   --anim-bleed-y: 7rem;
   --logo-height: calc(var(--logo-width) * 791 / 2560);
@@ -128,7 +128,7 @@ body {
 
 /*
  * Tectonic CSS = resources/css/app.css (logo-tectonic-*), zonder Tailwind/@apply.
- * Demo: 290px logo + canvas-bleed; variant 2/3 clip-overrides op data-variant.
+ * Demo: 290px logo + canvas bleed; variants 2/3 clip overrides on data-variant.
  */
 .demo-stage-canvas,
 .logo-tectonic-stage,
@@ -282,7 +282,7 @@ body {
     opacity: 1;
   }
 
-  /* Tijdens replay: nooit platen verbergen door .is-settled terwijl is-playing nog sync loopt. */
+  /* During replay: do not hide plates while is-settled and is-playing overlap. */
   .logo-tectonic-stage.is-playing .logo-tectonic-plates {
     opacity: 1;
     pointer-events: none;
@@ -299,9 +299,9 @@ body {
   }
 
   /*
-   * Replay: platen stonden op transform:none (is-settled). Zonder deze regel
-   * animeren ze 950ms *naar* scatter terwijl JS na 100ms al settelt → flits.
-   * Eerst instant scatter, daarna ~950ms inschuiven bij .is-settled.
+   * Replay: plates were transform:none (is-settled). Without this rule they
+   * transition 950ms *toward* scatter while JS settles after 100ms → flash.
+   * Snap scatter instantly, then ~950ms settle when .is-settled is added.
    */
   .logo-tectonic-stage.is-playing:not(.is-settled) .logo-tectonic-plate__img {
     transition: none;
@@ -313,8 +313,8 @@ body {
 }
 
 /*
- * Variant 2/3: vóór Alpine (`data-intro-ready`) → eindbeeld, geen scatter-flits.
- * Idle: .is-settled:not(.is-playing). Tijdens Afspelen: zelfde intro als variant 1.
+ * Variants 2/3: before Alpine (`data-intro-ready`) → final frame, no scatter flash.
+ * Idle: data-idle. During Play: same intro as variant 1.
  */
 @media (prefers-reduced-motion: no-preference) and (min-width: 768px) {
   [data-variant="thirds"] .logo-tectonic-stage:not([data-intro-ready]) .logoImg,

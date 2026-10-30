@@ -1,35 +1,35 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Tectonic logo intro — HWA de Jong (3 varianten)</title>
+    <title>Tectonic logo intro — HWA de Jong (3 variants)</title>
     <meta
       name="description"
-      content="Standalone demo: brand-kleurnaden, gelijke derden, schuine breuk."
+      content="Standalone demo: brand color seams, equal thirds, angled fault clips."
     />
-    <link rel="stylesheet" href="css/demo.css?v=20261030d" />
+    <link rel="stylesheet" href="css/demo.css?v=20261030e" />
   </head>
   <body>
     <header class="page-header">
       <h1>Tectonic logo intro</h1>
       <p>
-        Zelfde Alpine/markup als de header (variant 1). Open
-        <code>index.html</code> direct (file://) — internet nodig voor Alpine-CDN.
-        Alleen <strong>1 — Brand</strong> speelt bij load; 2 en 3 via
-        <em>Afspelen</em>.
+        Same Alpine/markup as the site header (variant 1). Prefer
+        <code>http://127.0.0.1:8765/</code> over <code>file://</code> — internet
+        required for the Alpine CDN. Only <strong>1 — Brand</strong> plays on load;
+        2 and 3 via <em>Play</em>.
       </p>
     </header>
 
     <main class="demos">
       <article class="demo-card" data-variant="brand" x-data="logoTectonicIntro({ playOnInit: true })">
         <div class="demo-card__head">
-          <h2>1 — Brand (kleurnaden)</h2>
+          <h2>1 — Brand (color seams)</h2>
           <p>
-            <code>x-data="logoTectonicIntro()"</code> — viewBox 2560:
-            <code>1250</code> · <code>1134,36</code> · <code>176,34</code>.
+            <code>logoTectonicIntro({ playOnInit: true })</code> — viewBox 2560:
+            <code>1250</code> · <code>1134.36</code> · <code>176.34</code>.
           </p>
-          <button type="button" class="demo-play" data-tectonic-replay>Afspelen</button>
+          <button type="button" class="demo-play" data-tectonic-replay>Play</button>
         </div>
         <div class="demo-stage-wrap">
           <div class="demo-stage-canvas">
@@ -77,9 +77,9 @@
 
       <article class="demo-card" data-variant="thirds" x-data="logoTectonicIntro({ playOnInit: false })">
         <div class="demo-card__head">
-          <h2>2 — Derden (gelijk)</h2>
-          <p>Drie kolommen <code>33,333%</code> — statisch tot <em>Afspelen</em>.</p>
-          <button type="button" class="demo-play" data-tectonic-replay>Afspelen</button>
+          <h2>2 — Thirds (equal columns)</h2>
+          <p>Three columns at <code>33.333%</code> — static until <em>Play</em>.</p>
+          <button type="button" class="demo-play" data-tectonic-replay>Play</button>
         </div>
         <div class="demo-stage-wrap">
           <div class="demo-stage-canvas">
@@ -127,9 +127,9 @@
 
       <article class="demo-card" data-variant="fault" x-data="logoTectonicIntro({ playOnInit: false })">
         <div class="demo-card__head">
-          <h2>3 — Breuk (schuine voegen)</h2>
-          <p>Schuine clips — statisch tot <em>Afspelen</em>.</p>
-          <button type="button" class="demo-play" data-tectonic-replay>Afspelen</button>
+          <h2>3 — Fault (angled seams)</h2>
+          <p>Angled polygon clips — static until <em>Play</em>.</p>
+          <button type="button" class="demo-play" data-tectonic-replay>Play</button>
         </div>
         <div class="demo-stage-wrap">
           <div class="demo-stage-canvas">
@@ -178,12 +178,12 @@
 
     <footer class="page-footer">
       <p>
-        Repo: <code>tectonic-logo-ani-hwa</code> · Alpine 3.x via CDN (zelfde component
-        als hwadejong-2026).
+        Repo: <code>tectonic-logo-ani-hwa</code> · Alpine 3.x via CDN (same component
+        pattern as hwadejong-2026).
       </p>
     </footer>
 
-    <script defer src="js/demo.js?v=20261030d"></script>
+    <script defer src="js/demo.js?v=20261030e"></script>
     <script
       defer
       src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.9/dist/cdn.min.js"
